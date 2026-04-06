@@ -6,6 +6,8 @@ interface Course {
     syllabus: string;
 }
 
+getStoredCourses ();
+
 // Funktion för att skriva ut kurs
 function printCourseDetails (course: Course):void {
     const courseTable = document.querySelector("tbody") as HTMLElement;
@@ -70,11 +72,33 @@ function createCourse():void {
     syllabus: syllabusInputEl.value,
   };
 
-  //Lagra i LocalStorage
-    const storageCount = localStorage.length;
-    const storageKey: string = `Kurs ${storageCount + 1}`;
-    localStorage.setItem(storageKey, JSON.stringify(newCourse));
+    //Lagra i LocalStorage
+    const storedCourses: Course[] = JSON.parse(localStorage.getItem("courses") || "[]");
+    storedCourses.push(newCourse);
+    localStorage.setItem("courses", JSON.stringify(storedCourses));
 
-  // Använd printUserDetails för att skriva ut användardetaljer
-  printCourseDetails(newCourse);
+    // Använd printUserDetails för att skriva ut användardetaljer
+    printCourseDetails(newCourse);
+}
+
+function getStoredCourses () {
+    if (localStorage.length < 1) {
+        return
+    }
+    const courseArr = JSON.parse(localStorage.getItem("courses") || "[]");
+    const courseTable = document.querySelector("tbody") as HTMLElement;
+
+
+    if (courseArr && courseTable) {
+        courseArr.forEach(course  => {
+            courseTable.innerHTML += `
+            <tr>
+                <td>${course.code}</td>
+                <td>${course.name}</td>
+                <td>${course.progression}</td>
+                <td>${course.syllabus}</td>
+            `
+        });
+    }
+    
 }
