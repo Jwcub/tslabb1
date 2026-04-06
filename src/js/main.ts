@@ -30,16 +30,39 @@ const courseForm = document.querySelector(".add-new-course") as HTMLFormElement;
 if(courseForm) {
     courseForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    createCourse();
+    });
+}
 
-  // Hämta värden från formuläret
-const codeInputEl = document.querySelector("#course-code") as HTMLInputElement;
-const nameInputEl = document.querySelector("#course-name") as HTMLInputElement;
-const progressionInputEl = document.querySelector("#progression") as HTMLInputElement;
-const syllabusInputEl = document.querySelector("#syllabus") as HTMLInputElement;
+function createCourse():void {
+    // Hämta värden från formuläret
+    const codeInputEl = document.querySelector("#course-code") as HTMLInputElement;
+    const nameInputEl = document.querySelector("#course-name") as HTMLInputElement;
+    const progressionInputEl = document.querySelector("#progression") as HTMLInputElement;
+    const syllabusInputEl = document.querySelector("#syllabus") as HTMLInputElement;
 
-    // Notering: här borde inputvalidering läggas till
+    // Validering av inputfält
+    const errorMessageEl = document.getElementById("error-message") as HTMLDivElement;
+    if(errorMessageEl) { errorMessageEl.textContent = ""; }
+    let error: string[] = [];
 
-  // Skapa ett användarobjekt
+    if(codeInputEl.value.length < 2) {
+        error.push("Fyll i kurskod");
+    } if (nameInputEl.value.length < 2) {
+        error.push("Fyll i kursnamn");
+    } if(syllabusInputEl.value.length < 2) {
+        error.push("Fyll i länk till kursplan");
+    }
+
+    // Utskrift av felmeddelande
+    if(errorMessageEl && error.length > 0) {
+        for (let message of error) {
+            errorMessageEl.innerHTML += message;
+        }
+        return;
+    }
+
+  // Skapa ett kursobjekt
   const newCourse: Course = {
     code: codeInputEl.value,
     name: nameInputEl.value,
@@ -47,7 +70,11 @@ const syllabusInputEl = document.querySelector("#syllabus") as HTMLInputElement;
     syllabus: syllabusInputEl.value,
   };
 
+  //Lagra i LocalStorage
+    const storageCount = localStorage.length;
+    const storageKey: string = `Kurs ${storageCount + 1}`;
+    localStorage.setItem(storageKey, JSON.stringify(newCourse));
+
   // Använd printUserDetails för att skriva ut användardetaljer
   printCourseDetails(newCourse);
-  });
 }

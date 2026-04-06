@@ -52,10 +52,14 @@ th, td {
     column-gap: 20px;
     row-gap: 15px;
 }
-input {
+
+input, select {
     margin-top: 5px;
     width: 100%;
     padding: 8px 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
 label {
