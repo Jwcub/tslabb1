@@ -1,3 +1,5 @@
+getStoredCourses ();
+
 //Interface
 interface Course {
     code: string;
@@ -5,8 +7,6 @@ interface Course {
     progression: string;
     syllabus: string;
 }
-
-getStoredCourses ();
 
 // Funktion för att skriva ut kurs
 function printCourseDetails (course: Course):void {
@@ -19,7 +19,7 @@ function printCourseDetails (course: Course):void {
             <td>${course.name}</td>
             <td>${course.progression}</td>
             <td>${course.syllabus}</td>
-            <td>X</td>
+            <td><span class="material-symbols-outlined remove">delete</span></td>
         </tr>
         `;
     }
@@ -90,15 +90,16 @@ function getStoredCourses () {
 
 
     if (courseArr && courseTable) {
-        courseArr.forEach(course  => {
+        courseArr.forEach((course: Course)  => {
             courseTable.innerHTML += `
             <tr>
                 <td>${course.code}</td>
                 <td>${course.name}</td>
                 <td>${course.progression}</td>
                 <td>${course.syllabus}</td>
+                <td><span class="material-symbols-outlined remove">delete</span></td>
+            </tr>
             `
         });
     }
-    
 }
