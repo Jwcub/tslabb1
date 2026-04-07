@@ -1,7 +1,9 @@
 addEventListener("DOMContentLoaded", () => {
 
+    // Hämta lagrade kurser från localStorage
     getStoredCourses ()
 
+    // Lägg till händelselyssnare på formulärsknapp
     const form = document.querySelector<HTMLFormElement>(".add-new-course");
     if (!form) return;
     form.addEventListener("submit", addCourse);
@@ -96,7 +98,7 @@ function printCourseDetails(course: Course):void {
         }
     });
 
-    // Lägg till i DOM
+    // Lägg till tabellrad i DOM
     if(courseTable) {
         courseTable.appendChild(tableRow);
     }
