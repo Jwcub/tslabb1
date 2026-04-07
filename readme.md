@@ -7,5 +7,5 @@ Applikationen gör det möjligt att lägga till, visa och radera kurser. Varje k
 
 Kursinformationen lagras i localStorage för att finnas kvar mellan sessioner, och DOM-manipulation används för att dynamiskt uppdatera innehållet på webbsidan.
 
-** Webbplatsen finns tillgänglig vid: **
+**Webbplatsen finns tillgänglig vid:**
 https://labb1ts.netlify.app/ 
