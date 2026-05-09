@@ -1,12 +1,13 @@
 addEventListener("DOMContentLoaded", () => {
 
     // Hämta lagrade kurser från localStorage
-    getStoredCourses ()
+    getStoredCourses()
 
     // Lägg till händelselyssnare på formulärsknapp
     const form = document.querySelector<HTMLFormElement>(".add-new-course");
-    if (!form) return;
+    if (form) {
     form.addEventListener("submit", addCourse);
+    }
 
 });
 
@@ -21,7 +22,10 @@ interface Course {
 // Enums fungerade inte (erasableSyntaxOnly)
 type Progression = "A" | "B" | "C";
 
-function addCourse(event: SubmitEvent) {
+// Lagrade kurser i LocalStorage
+const storedCourses: Course[] = JSON.parse(localStorage.getItem("courses") || "[]");
+
+function addCourse(event: SubmitEvent):void {
     event.preventDefault();
 
     // Hämta värden från formuläret
@@ -56,6 +60,12 @@ function addCourse(event: SubmitEvent) {
         return;
     }
 
+    // Kontrollera att kurskoden är unik
+    if(storedCourses.some(course => course.code === codeInputEl.value)) {
+        errorMessageEl.textContent = "Kurskod måste vara unikt"
+        return
+    }
+
     // Skapa ett kursobjekt
     const newCourse: Course = {
         code: codeInputEl.value,
@@ -69,6 +79,11 @@ function addCourse(event: SubmitEvent) {
 
     // Lagra kurs i localStorage
     storeCourse(newCourse);
+
+    // Töm fält
+    codeInputEl.value = "";
+    nameInputEl.value = "";
+    syllabusInputEl.value = "";
 }
 
 function printCourseDetails(course: Course):void {
@@ -105,7 +120,6 @@ function printCourseDetails(course: Course):void {
 }
 
 function storeCourse(course: Course):void {
-    const storedCourses: Course[] = JSON.parse(localStorage.getItem("courses") || "[]");
     storedCourses.push(course);
     localStorage.setItem("courses", JSON.stringify(storedCourses));
 }
@@ -125,5 +139,4 @@ function getStoredCourses () {
         });
     }
 }
-
 

@@ -27,7 +27,7 @@ header {
 
 main {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
 table {
@@ -84,4 +84,11 @@ label {
 
 .remove {
     cursor: pointer;
+}
+
+#error-message {
+    font-weight: 600;
+    font-size: 1rem;
+    color: red;
+    margin: 10px 0;
 }
