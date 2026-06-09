@@ -62,7 +62,7 @@ function addCourse(event: SubmitEvent):void {
 
     // Kontrollera att kurskoden är unik
     if(storedCourses.some(course => course.code === codeInputEl.value)) {
-        errorMessageEl.textContent = "Kurskod måste vara unikt"
+        errorMessageEl.textContent = "Kurskod måste vara unik"
         return
     }
 
